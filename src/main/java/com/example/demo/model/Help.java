@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Help {
-    private String id;
-    private Donor donor;
-    private int amount;
-    private Beneficiary beneficiary;
-    private PspPayment payment;
+  private String id;
+  private Donor donor;
+  private int amount;
+  private Beneficiary beneficiary;
+  private PspPayment payment;
 }
