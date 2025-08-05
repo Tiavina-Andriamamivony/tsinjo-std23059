@@ -1,0 +1,7 @@
+package com.example.demo.model.psp;
+
+import java.time.Instant;
+import lombok.Builder;
+
+@Builder(toBuilder = true)
+public record PspPayment(PspType pspType, String id, Integer amount, Instant creationInstant) {}
