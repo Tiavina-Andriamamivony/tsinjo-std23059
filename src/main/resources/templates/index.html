@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tsinjo</title>
+</head>
+<body>
+<h1>Tsinjo</h1>
+
+<form th:action="@{/donation}" th:object="${donationForm}" method="post">
+    <input type="email" th:field="*{email}" placeholder="Email" required>
+    <select th:field="*{pspType}">
+        <option value="ORANGE_MONEY">Orange Money</option>
+    </select>
+    <input type="text" th:field="*{pspPaymentId}" placeholder="Référence de paiement" required>
+    <button type="submit">Donner !</button>
+</form>
+
+<h2>Historique</h2>
+<ul>
+    <li th:each="tx : ${transactions}">
+        <span th:if="${tx.nature == 'DONATION'}">+</span>
+        <span th:if="${tx.nature == 'WITHDRAWAL'}">-</span>
+        <span th:text="${tx.amount} + 'Ar'"></span>
+        <span th:if="${tx.payment?.verificationStatus == 'SUCCEEDED'}">(confirmé, <span th:text="${tx.payment?.pspPayment?.pspType}"></span>)</span>
+        <span th:if="${tx.payment?.verificationStatus == 'VERIFYING'}">(en vérification, <span th:text="${tx.payment?.pspPayment?.pspType}"></span>)</span>
+        <span th:text="${#temporals.format(tx.transactionInstant, 'dd/MM/yyyy')}"></span>.
+        <span th:if="${tx.nature == 'DONATION'}">Par <span th:text="${tx.user.firstName + ' ' + tx.user.lastName}"></span></span>
+        <span th:if="${tx.nature == 'WITHDRAWAL'}">Pour <span th:text="${tx.user.firstName + ' ' + tx.user.lastName}"></span></span>
+        <span th:if="${tx.description}" th:text="' ' + tx.description"></span>
+    </li>
+</ul>
+</body>
+</html>
